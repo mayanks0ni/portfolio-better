@@ -64,7 +64,6 @@ export default function Home() {
           "indian institute of technology, jodhpur",
           "duration: july 2024 - may 2028 (expected)",
           "degree: b.tech in electrical engineering",
-          "cgpa: 7.58 / 10",
           "relevant coursework:",
           "- calculus",
           "- introduction to electrical engineering",
