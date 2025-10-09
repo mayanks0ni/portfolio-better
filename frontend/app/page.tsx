@@ -217,7 +217,7 @@ export default function Home() {
       {chatbotOpen && (
         <div className="fixed bottom-20 right-6 w-80 h-96 bg-gray-900 border border-gray-700 rounded-xl shadow-xl flex flex-col overflow-hidden">
           <div className="bg-gray-800 text-green-400 p-2 text-sm font-semibold border-b border-gray-700">
-            🤖 mayank-bot
+            moonlit-chatbot
           </div>
 
           {/* Messages */}
