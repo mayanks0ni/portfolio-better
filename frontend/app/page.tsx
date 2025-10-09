@@ -61,49 +61,25 @@ export default function Home() {
       case "education":
         newLines = [
           "education:",
-          "indian institute of technology, jodhpur",
-          "duration: july 2024 - may 2028 (expected)",
-          "degree: b.tech in electrical engineering",
-          "cgpa: 7.58 / 10",
-          "relevant coursework:",
-          "- calculus",
-          "- introduction to electrical engineering",
-          "- introduction to computer science",
-          "- linear algebra and differential equations",
-          "- engineering mechanics",
-          "",
-          "krishna public school",
-          "duration: april 2012 - may 2024",
-          "aissce 2024:",
-          "- physics, chemistry, mathematics, english, computer science",
-          "- grade: 95.4%",
-          "aissce 2022:",
-          "- science, social science, mathematics, english, hindi",
-          "- grade: 94.3%",
+          "your education",
         ];
         break;
       case "projects":
         newLines = [
           "projects:",
-          "1. studyflow — ai-powered study planner (next.js + gemini api)",
-          "2. sketchnote — react native whiteboard-to-pdf app",
-          "3. smartcam — esp8266-triggered camera system",
+          "your projects",
         ];
         break;
       case "skills":
         newLines = [
           "skills:",
-          "languages: c, python, javascript",
-          "frameworks: react, next.js, express",
-          "tools: git, docker, tailwind, solidworks",
+          "your skills",
         ];
         break;
       case "contact":
         newLines = [
           "contact me:",
-          "email: mayanks86027@gmail.com",
-          "linkedin: linkedin.com/in/mayanks0ni",
-          "github: github.com/mayanks0ni",
+          "your contacts",
         ];
         break;
       case "clear":
@@ -196,13 +172,13 @@ export default function Home() {
         </div>
 
         <div className="mt-6 text-center text-gray-400 text-sm space-x-4 pb-3">
-          <a href="mailto:mayanks86027@gmail.com" className="hover:text-green-400">email</a>
+          <a href="mailto:youraddress@example.com" className="hover:text-green-400">email</a>
           <span>|</span>
-          <a href="https://linkedin.com/in/mayanks0ni" className="hover:text-green-400">linkedin</a>
+          <a href="https://linkedin.com/in/yourUserName" className="hover:text-green-400">linkedin</a>
           <span>|</span>
-          <a href="https://github.com/mayanks0ni" className="hover:text-green-400">github</a>
+          <a href="https://github.com/yourUserName" className="hover:text-green-400">github</a>
           <span>|</span>
-          <a href="https://1drv.ms/f/c/f792baf88d2c4668/Ercg98imGgpKk39jI-02JJUBDB7kn_TJgcP3DCf1rKJAxg?e=4bfXdC" className="hover:text-green-400">resources</a>
+          <a href="your resources link (if any, otherwise remove this section)" className="hover:text-green-400">resources</a>
         </div>
       </div>
 
@@ -218,7 +194,7 @@ export default function Home() {
       {chatbotOpen && (
         <div className="fixed bottom-20 right-6 w-80 h-96 bg-gray-900 border border-gray-700 rounded-xl shadow-xl flex flex-col overflow-hidden">
           <div className="bg-gray-800 text-green-400 p-2 text-sm font-semibold border-b border-gray-700">
-            🤖 mayank-bot
+            🤖 chat-bot
           </div>
 
           {/* Messages */}
