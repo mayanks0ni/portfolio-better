@@ -31,7 +31,7 @@ app.post('/api/chatbot', async (req, res) => {
   });
 
   const result = await genAI.models.generateContent({
-    model: "gemini-2.0-flash",
+    model: "gemini-2.5-flash",
     contents: createUserContent([
       createPartFromUri(file.uri, file.mimeType),
       `You are **Moonlit**, an AI terminal assistant built by *Mayank Soni*.
