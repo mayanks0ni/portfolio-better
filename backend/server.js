@@ -23,91 +23,42 @@ app.use(bodyParser.json());
 app.post('/api/chatbot', async (req, res) => {
   const { GoogleGenAI, createPartFromUri, createUserContent } = await import("@google/genai");
   const genAI = new GoogleGenAI({ apiKey: apikey });
+  const filePath = path.join(__dirname, "imp/resume.pdf");
+  const file = await genAI.files.upload({ file: filePath, });
+  const result = await genAI.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: createUserContent([
+      createPartFromUri(file.uri, file.mimeType),
+      `You are **Moonlit**, an AI terminal assistant built by *Mayank Soni*.
+Your role is to chat inside a macOS-style terminal interface on Mayank’s portfolio website.
 
-  const { query, file: userFile } = req.body;
+🎯 **Core Behavior:**
+- Be friendly, concise, and have a calm “terminal companion” personality.
+- Greet users politely and naturally when they start a conversation.
+- You may talk about yourself (as Moonlit) — e.g., who you are, what you can do, your purpose.
+- When asked factual questions about Mayank (education, projects, skills, experience, etc.), answer **strictly using only the attached resume.pdf**.
+- Never make up or infer details not present in the document.
+- If the resume lacks information needed to answer accurately, say:
+  > "I'm sorry, the document doesn’t contain enough information to answer that."
 
-    // upload resume once (or cache this in prod)
-    const resumePath = path.join(process.cwd(), "imp/resume.pdf");
-    const resumeFile = await genAI.files.upload({
-      file: resumePath,
-    });
+🧩 **Style Guidelines:**
+  - Match a macOS terminal aesthetic — lowercase, concise, no markdown or code formatting.
+  - Use lowercase tone.
+  - Avoid emojis (unless they fit cleanly, like 🚀 or ⚡).
+  - Keep replies short, structured, and visually clean.
+  - Use simple line breaks instead of long paragraphs.
+- For example:
+  - “hello there 👋 i’m moonlit, your terminal companion.”
+  - “based on mayank’s resume, here’s what i found:”
+  - “i’m sorry, i don’t have that info in my data source.”
 
-    // create chat ONLY ONCE
-    if (!chat) {
-      const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash",
-      });
+Now answer the user’s query below using only this context:
+${req.body.query}`,
+    ]),
+  });
 
-      chat = model.startChat({
-        history: [
-          {
-            role: "user",
-            parts: [
-              {
-                text: `
-you are moonlit, an ai terminal assistant built by mayank soni.
-
-context:
-- you chat inside a macos-style terminal interface on mayank’s portfolio website.
-
-core behavior:
-- friendly, calm, concise
-- terminal companion vibe
-- lowercase tone
-- no markdown
-- no code formatting
-- minimal emojis only if they fit naturally
-
-resume rule (critical):
-- when asked factual questions about mayank (education, projects, skills, experience):
-  - answer strictly using only resume.pdf
-  - do not infer or make up anything
-  - if missing info, say:
-    "i’m sorry, the document doesn’t contain enough information to answer that."
-
-reply style:
-- short
-- clean
-- visually spaced
-- terminal-like
-                `.trim(),
-              },
-              // attach resume to the chat context
-              createPartFromUri(resumeFile.uri, resumeFile.mimeType),
-            ],
-          },
-        ],
-      });
-    }
-
-    // build user message parts
-    const userParts = [];
-
-    // optional user-attached file (image, etc.)
-    if (userFile?.uri && userFile?.mimeType) {
-      userParts.push(
-        createPartFromUri(userFile.uri, userFile.mimeType)
-      );
-    }
-
-    // greet ONLY on first turn
-    if (!hasGreeted) {
-      userParts.push({
-        text: "this is the first message. greet briefly as moonlit before answering.",
-      });
-      hasGreeted = true;
-    }
-
-    // actual user query
-    userParts.push({ text: query });
-
-    // send message
-    const result = await chat.sendMessage(
-      createUserContent(userParts)
-    );
-
-    const responseText = result.response.text();
-    res.json({ message: responseText });
+  const response = await result.text;
+  res.json({ message: response });
 });
 
 app.listen(PORT, () => {
