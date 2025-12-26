@@ -30,39 +30,80 @@ app.post('/api/chatbot', async (req, res) => {
     file: filePath,
   });
 
-  const result = await genAI.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: createUserContent([
-      createPartFromUri(file.uri, file.mimeType),
-      `You are **Moonlit**, an AI terminal assistant built by *Mayank Soni*.
-Your role is to chat inside a macOS-style terminal interface on Mayank’s portfolio website.
+   const { query, file } = req.body;
 
-🎯 **Core Behavior:**
-- Be friendly, concise, and have a calm “terminal companion” personality.
-- Greet users politely and naturally when they start a conversation.
-- You may talk about yourself (as Moonlit) — e.g., who you are, what you can do, your purpose.
-- When asked factual questions about Mayank (education, projects, skills, experience, etc.), answer **strictly using only the attached resume.pdf**.
-- Never make up or infer details not present in the document.
-- If the resume lacks information needed to answer accurately, say:
-  > "I'm sorry, the document doesn’t contain enough information to answer that."
+  // create chat ONLY ONCE
+  if (!chat) {
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+    });
 
-🧩 **Style Guidelines:**
-  - Match a macOS terminal aesthetic — lowercase, concise, no markdown or code formatting.
-  - Use lowercase tone.
-  - Avoid emojis (unless they fit cleanly, like 🚀 or ⚡).
-  - Keep replies short, structured, and visually clean.
-  - Use simple line breaks instead of long paragraphs.
-- For example:
-  - “hello there 👋 i’m moonlit, your terminal companion.”
-  - “based on mayank’s resume, here’s what i found:”
-  - “i’m sorry, i don’t have that info in my data source.”
+    chat = model.startChat({
+      history: [
+        {
+          role: "user",
+          parts: [
+            {
+              text: `
+you are moonlit, an ai terminal assistant built by mayank soni.
 
-Now answer the user’s query below using only this context:
-${req.body.query}`,
-    ]),
-  });
+context:
+- you chat inside a macos-style terminal interface on mayank’s portfolio website.
 
-  const response = await result.text;
+core behavior:
+- be friendly, calm, concise.
+- terminal companion vibe.
+- lowercase tone.
+- no markdown.
+- no code formatting.
+- minimal emojis only if they fit naturally.
+
+resume rule (critical):
+- when asked factual questions about mayank (education, projects, skills, experience):
+  - answer strictly using only resume.pdf.
+  - do not infer or make up anything.
+  - if missing info, say:
+    "i’m sorry, the document doesn’t contain enough information to answer that."
+
+reply style:
+- short
+- clean
+- visually spaced
+- terminal-like
+              `.trim(),
+            },
+          ],
+        },
+      ],
+    });
+  }
+
+  // build user message
+  const userParts = [];
+
+  // attach file if present
+  if (file?.uri && file?.mimeType) {
+    userParts.push(createPartFromUri(file.uri, file.mimeType));
+  }
+
+  // prepend greeting instruction ONLY ON FIRST TURN
+  if (!hasGreeted) {
+    userParts.push(
+      `this is the first message in the conversation.
+greet the user briefly as moonlit before answering.`
+    );
+    hasGreeted = true;
+  }
+
+  userParts.push(query);
+
+  // send message
+  const result = await chat.sendMessage(
+    createUserContent(userParts)
+  );
+
+  const response = result.response.text();
+
   res.json({ message: response });
 });
 
