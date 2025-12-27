@@ -25,6 +25,7 @@ app.post('/api/chatbot', async (req, res) => {
   const genAI = new GoogleGenAI({ apiKey: apikey });
   const filePath = path.join(__dirname, "imp/resume.pdf");
   const file = await genAI.files.upload({ file: filePath, });
+  
   const result = await genAI.models.generateContent({
     model: "gemini-2.5-flash",
     contents: createUserContent([
