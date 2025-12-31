@@ -15,7 +15,7 @@ export default function Home() {
   const [chatInput, setChatInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // timer updater code snippet
+  // timer updater 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
