@@ -68,24 +68,30 @@ export async function GET(req: Request) {
       );
     }
 
-    // Automatically update .env and .env.local on disk
-    const envPaths = [
-      path.join(process.cwd(), ".env"),
-      path.join(process.cwd(), ".env.local"),
-    ];
+    // In local development, write token to .env / .env.local
+    if (process.env.NODE_ENV === "development") {
+      try {
+        const envPaths = [
+          path.join(process.cwd(), ".env"),
+          path.join(process.cwd(), ".env.local"),
+        ];
 
-    for (const envPath of envPaths) {
-      if (fs.existsSync(envPath)) {
-        let content = fs.readFileSync(envPath, "utf8");
-        if (content.includes("SPOTIFY_REFRESH_TOKEN=")) {
-          content = content.replace(
-            /SPOTIFY_REFRESH_TOKEN=.*/g,
-            `SPOTIFY_REFRESH_TOKEN=${refreshToken}`
-          );
-        } else {
-          content += `\nSPOTIFY_REFRESH_TOKEN=${refreshToken}\n`;
+        for (const envPath of envPaths) {
+          if (fs.existsSync(/* turbopackIgnore: true */ envPath)) {
+            let content = fs.readFileSync(/* turbopackIgnore: true */ envPath, "utf8");
+            if (content.includes("SPOTIFY_REFRESH_TOKEN=")) {
+              content = content.replace(
+                /SPOTIFY_REFRESH_TOKEN=.*/g,
+                `SPOTIFY_REFRESH_TOKEN=${refreshToken}`
+              );
+            } else {
+              content += `\nSPOTIFY_REFRESH_TOKEN=${refreshToken}\n`;
+            }
+            fs.writeFileSync(envPath, content, "utf8");
+          }
         }
-        fs.writeFileSync(envPath, content, "utf8");
+      } catch {
+        // Read-only filesystem in serverless environments
       }
     }
 
