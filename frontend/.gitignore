@@ -9,6 +9,7 @@ out/
 build/
 dist/
 *.tsbuildinfo
+AGENTS.md
 
 # Local staging
 /collection/
