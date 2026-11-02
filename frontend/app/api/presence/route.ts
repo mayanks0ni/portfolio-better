@@ -263,11 +263,11 @@ function detectLocalEditorActivity(): PresenceResponse | null {
         for (const d of dirs) {
           const full = path.join(root, d);
           try {
-            const stat = fs.statSync(full);
-            if (stat.isDirectory() && stat.mtimeMs > latestMtime) {
-              const db = path.join(full, "state.vscdb");
-              if (fs.existsSync(db)) {
-                latestMtime = stat.mtimeMs;
+            const db = path.join(full, "state.vscdb");
+            if (fs.existsSync(db)) {
+              const dbStat = fs.statSync(db);
+              if (dbStat.mtimeMs > latestMtime) {
+                latestMtime = dbStat.mtimeMs;
                 mostRecentDir = full;
                 chosenEditor = type;
               }

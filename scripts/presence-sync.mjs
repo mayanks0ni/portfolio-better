@@ -19,9 +19,9 @@ import path from "path";
 import os from "os";
 import { execSync } from "child_process";
 
-const TARGET_URL = (process.argv[2] || process.env.PRESENCE_URL || "https://portfolio-hosted.vercel.app").replace(/\/$/, "");
+const TARGET_URL = (process.argv[2] || process.env.PRESENCE_URL || "https://portfolio-ebon-one-69.vercel.app").replace(/\/$/, "");
 const SECRET = process.argv[3] || process.env.PRESENCE_SYNC_SECRET || process.env.PRESENCE_SECRET || "";
-const INTERVAL_MS = parseInt(process.env.PRESENCE_INTERVAL || "15000", 10);
+const INTERVAL_MS = parseInt(process.env.PRESENCE_INTERVAL || "10000", 10);
 const IDLE_THRESHOLD_MS = 20 * 60 * 1000; // 20 minutes of no edits = idle
 
 const LANG_MAP = {
@@ -100,11 +100,11 @@ function getLocalCodingState() {
         for (const d of dirs) {
           const full = path.join(root, d);
           try {
-            const stat = fs.statSync(full);
-            if (stat.isDirectory() && stat.mtimeMs > latestMtime) {
-              const db = path.join(full, "state.vscdb");
-              if (fs.existsSync(db)) {
-                latestMtime = stat.mtimeMs;
+            const db = path.join(full, "state.vscdb");
+            if (fs.existsSync(db)) {
+              const dbStat = fs.statSync(db);
+              if (dbStat.mtimeMs > latestMtime) {
+                latestMtime = dbStat.mtimeMs;
                 mostRecentDir = full;
                 chosenEditor = type;
               }
@@ -269,3 +269,4 @@ async function handleExit() {
 
 process.on("SIGINT", handleExit);
 process.on("SIGTERM", handleExit);
+
