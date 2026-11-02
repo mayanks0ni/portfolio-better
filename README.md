@@ -1,200 +1,147 @@
-# 🧠 Moonlit Portfolio — Interactive Terminal Portfolio
+# Mayank Soni — Luxury Dark / Digital Atelier Portfolio
 
-Welcome to **Moonlit Portfolio**, an interactive terminal-themed portfolio built with **Next.js (frontend)** and **Express.js (backend)**.  
-It features a built-in AI chatbot named **Moonlit** that answers questions **based only on your resume.pdf**, creating a personalized and engaging experience.
-
----
-
-## 🌟 Features
-
-- Terminal-style interface with command-based navigation  
-- Real-time clock and interactive terminal UI  
-- Built-in **AI Chatbot (Moonlit)** that:
-  - Reads information directly from your `resume.pdf`
-  - Replies politely and conversationally in a simple, terminal-style format
-  - Avoids any information not contained in the resume
-- Fully customizable for your own personal portfolio
+A premium, immersive creative developer portfolio engineered with **Next.js 15 (App Router)**, **React 19**, **Tailwind CSS v4**, and **GSAP Motion**. Designed in a **Luxury Dark / Digital Atelier** aesthetic with deep obsidian surfaces, disciplined electric lime contrast, refined editorial typography, and atmospheric depth.
 
 ---
 
-## 🧩 Project Structure
+## 🏛️ Design Language & Aesthetics
 
-```
-📦 project-root
-├── frontend/                 # Next.js portfolio frontend
-│   ├── app/                  # Main app pages and components
-│   ├── public/               # Public assets
-│   └── ...                   
-│
-├── backend/                  # Express.js backend server
-│   ├── imp/                  # Important files
-│   │   └── resume.pdf        # ✅ Place your resume here
-│   ├── server.js             # Express + Gemini API setup
-│   └── package.json
-│
-└── README.md
-```
+### 1. Base Palette
+- **Primary Background**: `#08090D` — deep obsidian.
+- **Secondary Background**: `#101219` — rich charcoal.
+- **Elevated Surfaces**: `#171A24` — dark glass panels with subtle inner bevels.
+- **Primary Typography**: `#F4F2ED` — warm near-white.
+- **Secondary Typography**: `#9296A3` — muted cool grey.
+- **Fine Borders & Separators**: `#292C37` & `rgba(255, 255, 255, 0.07)`.
 
----
+### 2. Contrast & Accent Hierarchy
+- **Electric Lime (`#C6F36B`)**: Primary signature accent for high-priority CTAs, active navigation states, live playback indicators, and typographic accents.
+- **Electric Blue (`#7185FF`)**: High-concurrency systems, network telemetry, and LinkedIn links.
+- **Vivid Violet (`#A78BFA`)**: Multi-agent DAG states and anime dossier highlights.
+- **Warm Amber (`#E9AF65`)**: Latency telemetry, human-in-the-loop review alerts, and algorithm callouts.
 
-## ⚙️ Setup Instructions
+### 3. Atmosphere & Surfaces
+- Multi-layered near-black and charcoal surfaces with subtle dimensional depth.
+- Low-opacity ambient lighting (`rgba(113, 133, 255, 0.08)` and `rgba(198, 243, 107, 0.06)`).
+- Dark translucent glassmorphic panels (`background: rgba(23, 26, 36, 0.72)`, `backdrop-filter: blur(18px)`).
+- Selective dark chrome sheens with fine metallic border reflections.
 
-### 1️⃣ Clone the Repository
-
-```bash
-git clone https://github.com/your-username/portfolio.git
-cd portfolio
-```
+### 4. Typography System
+- **Headings**: [*Newsreader*](https://fonts.google.com/specimen/Newsreader) with italic ligatures for an editorial, literary feel.
+- **Body Text**: [*Geist*](https://vercel.com/font) for clean modern readability.
+- **Technical Metadata**: [*Geist Mono*](https://vercel.com/font) for coordinates, status chips, and throughput metrics.
 
 ---
 
-### 2️⃣ Backend Setup
+## 🧭 Page Architecture & Sections
 
-Navigate to the backend folder:
+### 1. Hero / Overview
+- Oversized typography (`Mayank Soni`) with electric lime punctuation.
+- Live academic credential: **IIT Jodhpur — B.Tech Electrical Engineering (2024–2028)**.
+- Jodhpur coordinates (`26.29° N, 73.01° E`) and real-time IST clock.
+- Architectural specimen card on `#171A24` detailing current engineering focus areas.
+- High-contrast CTAs: Electric lime pill for *Explore Selected Work*, dark glass for *Get in Touch*.
 
-```bash
-cd backend
-```
+### 2. About & Technical Strengths
+- Academic background as an electrical engineering student at IIT Jodhpur.
+- Engineering philosophy cards highlighting high-concurrency systems, agentic safety layers, and state DAGs.
+- **Compact Technology Stack**: Editorial specimen matrix categorizing skills by domain (`languages`, `frontend`, `backend & systems`, `ai & machine learning`, `databases & infrastructure`, `creative tools`).
 
-Install dependencies:
+### 3. Selected Work & Deep Project Showcases
+Varied, non-template editorial presentations for core engineering repositories:
+1. **NeuroRoute** — AI-driven packet optimizer featuring a live Rich TUI terminal preview with PyTorch DQN telemetry (`4,820 pps`, `1.42 ms`).
+2. **Anchor8** — Autonomous agent security and policy control layer with real-time `SAFE / REVIEW / DANGEROUS` classifier lifecycle.
+3. **Continuum** — AI-native virtual film studio OS and production continuity coordinator powered by Google Cloud Agent Builder and ClickHouse MCP state graphs.
+4. **EV Route Optimizer** — C++ pathfinder on 150k-node OpenStreetMap graphs (Jaipur city) with dynamic charging range constraints.
+5. **Torrent Downloader** — High-performance desktop BitTorrent client handling 100+ GB swarms with Electron v33 and atomic storage.
+- Interactive **"Inspect Spec & Architecture"** modal dialog for each project detailing the problem statement, solution architecture, and personal contributions.
 
-```bash
-npm install
-```
+### 4. Beyond the Build (Personal Creative Intermission)
+- **A. Currently Listening (Spotify Web API):** Server-side route handler (`/api/spotify`) broadcasting currently playing tracks with live electric lime equalizer bars or recently played tracks with album artwork and Spotify links. (Graceful preview fallback when credentials are not yet configured).
+- **B. Anime Corner (AniList GraphQL):** Live profile connection displaying total completed anime, currently watching, total episodes, days watched, and mean score with Japanese kanji watermark (`アニメ`).
+- **C. Find Me on Discord:** Tactile personal identity card with `@mayanks0ni` handle and one-click copy feedback.
+- **D. Visual Archive (Designs & Edits):** Dark gallery (UI/UX, Posters & Brand, Motion & Edits) with interactive [Lightbox Modal](file:///Users/mayank/Coding/portfolio/frontend/components/LightboxModal.tsx).
 
-Create a `.env` file (optional) to store your Gemini API key:
+### 5. Contact & Closing
+- Compelling editorial invitation to collaborate and open to work status.
+- One-click copy email button for `mayanks86027@gmail.com` with compose shortcut.
+- Verified links to GitHub and LinkedIn.
+- Colophon footer with smooth back-to-top navigation.
 
-```
-API_KEY=your_gemini_api_key
-```
-
-Or directly set it in `server.js`:
-
-```js
-const apikey = "your_gemini_api_key";
-```
-
-Now, **add your resume** (PDF file) at this location:
-
-```
-backend/imp/resume.pdf
-```
-
-✅ The chatbot will use only this file to answer user questions.
-
-Start the backend server:
-
-```bash
-npm start
-```
-
-> The backend will start on:  
-> 🔗 `http://localhost:5000` (or whichever port you configure)
-
----
-
-### 3️⃣ Frontend Setup
-
-Open a new terminal window and navigate to the frontend folder:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-This starts the Next.js frontend app at:
-
-```
-http://localhost:3000
-```
-
-The frontend connects automatically to your backend’s `/api/chatbot` route for the chat functionality.
-
----
-
-## 🤖 Chatbot Behavior
-
-The chatbot **Moonlit** is powered by the Gemini API.  
-It uses a system prompt that ensures:
-
-- Responses are polite, concise, and lowercase.  
-- It only uses information found in your `resume.pdf`.  
-- If missing data, it responds with:  
-  > "i'm sorry, the document doesn’t contain enough information to answer that."
-
-You can modify the prompt inside `server.js` under the `/api/chatbot` route to change tone or behavior.
-
----
-
-## 🧠 Terminal Commands
-
-Inside the portfolio, users can type commands such as:
-
-| Command     | Description                         |
-|--------------|-------------------------------------|
-| `help`       | Show all available commands         |
-| `about`      | About the portfolio owner           |
-| `education`  | Educational background              |
-| `projects`   | Show recent projects                |
-| `skills`     | Show technologies used              |
-| `contact`    | Show contact links                  |
-| `clear`      | Clear the terminal                  |
-
----
-
-## 💬 Example Chatbot Usage
-
-**You:** hi  
-**Moonlit:**  
-```
-hello there 👋  
-i’m moonlit, your terminal companion.  
-how can i assist you today?
-```
-
-**You:** tell me about your education  
-**Moonlit:**  
-```
-based on your resume:  
-- b.tech in electrical engineering, iit jodhpur (2024–2028)  
-- cgpa: 7.58 / 10  
-- relevant coursework: calculus, electrical engineering, computer science
-```
-
----
-
-## 🧑‍💻 Customization for Your Own Portfolio
-
-1. Replace all mentions of “Mayank Soni” in both frontend and backend.  
-2. Add your own **resume.pdf** inside `backend/imp/`.  
-3. Modify terminal commands in `frontend/app/page.tsx` as desired.  
-4. Update the chatbot system prompt in `server.js` to personalize tone or name.  
+### 6. Moonlit AI Terminal Companion (Integrated Modal)
+- Discreet macOS-style floating terminal companion preserving terminal commands (`help`, `about`, `projects`, `skills`, `contact`, `clear`) and AI query chat functionality.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** Next.js, React, Tailwind CSS  
-- **Backend:** Express.js, Gemini API (`@google/genai`)  
-- **Language:** JavaScript (with optional TypeScript support)
+| Domain | Technology |
+|---|---|
+| **Framework** | Next.js 15 (App Router, Server Components & Dynamic API Routes) |
+| **Language & UI** | React 19, TypeScript (Strict Mode) |
+| **Styling** | Tailwind CSS v4 (`@tailwindcss/postcss`) |
+| **Motion** | GSAP (`gsap`, `@gsap/react`, `ScrollTrigger`) |
+| **Typography** | `next/font/google` (*Newsreader*, *Geist*, *Geist Mono*) |
+| **Icons** | Lucide React |
+| **Integrations** | Spotify Web API (OAuth 2.0), AniList GraphQL API |
 
 ---
 
-## 🚀 Deployment
+## ⚙️ Setup Instructions
 
-You can deploy easily using:
+### 1. Install Dependencies
 
-- **Frontend:** [Vercel](https://vercel.com/)  
-- **Backend:** [Render](https://render.com/), [Railway](https://railway.app/), or [Heroku](https://www.heroku.com/)  
+```bash
+cd frontend
+npm install
+```
 
-Make sure to update your frontend’s API endpoint to point to your deployed backend URL.
+### 2. Configure Environment Variables (Optional)
+
+Copy `.env.example` to `.env.local` inside `frontend/`:
+
+```bash
+cp .env.example .env.local
+```
+
+Configure your personal keys:
+
+```ini
+# 🎵 Spotify Web API
+SPOTIFY_CLIENT_ID=your_client_id
+SPOTIFY_CLIENT_SECRET=your_client_secret
+SPOTIFY_REFRESH_TOKEN=your_refresh_token
+
+# 🎌 Anime Corner (AniList)
+ANILIST_USERNAME=mayanks0ni
+
+# 💬 Discord Social Tag
+NEXT_PUBLIC_DISCORD_TAG=mayanks0ni
+```
+
+> **Note:** If Spotify credentials are not provided, the portfolio automatically operates in a high-fidelity preview mode with zero crashes or UI breaks.
+
+### 3. Run Development Server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 4. Build for Production
+
+```bash
+npm run build
+npm start
+```
 
 ---
 
-## ✨ Author
+## 👤 Author
 
 **Mayank Soni**  
-📧 [mayanks86027@gmail.com](mailto:mayanks86027@gmail.com)  
-🔗 [linkedin.com/in/mayanks0ni](https://linkedin.com/in/mayanks0ni)  
-💻 [github.com/mayanks0ni](https://github.com/mayanks0ni)
+Electrical Engineering Undergraduate — Indian Institute of Technology (IIT) Jodhpur  
+- 📧 Email: [mayanks86027@gmail.com](mailto:mayanks86027@gmail.com)  
+- 💻 GitHub: [github.com/mayanks0ni](https://github.com/mayanks0ni)  
+- 🔗 LinkedIn: [linkedin.com/in/mayanks0ni](https://linkedin.com/in/mayanks0ni)  
