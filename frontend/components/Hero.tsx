@@ -33,18 +33,7 @@ interface SpotifyData {
   isConfigured: boolean;
 }
 
-interface PresenceData {
-  isCoding: boolean;
-  editor: "antigravity" | "vs code" | null;
-  editorDisplay: string;
-  language: string | null;
-  extension: string | null;
-  phrase: string;
-  status: "active" | "idle" | "offline";
-  statusText: string;
-  sessionStartedAt?: string;
-  updatedAt: string;
-}
+import { PresenceData, parseLanyardData } from "@/lib/presence";
 
 function AntigravityIcon({ className = "w-9 h-9" }: { className?: string }) {
   return (
@@ -125,23 +114,88 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    async function fetchPresence() {
+    const DISCORD_USER_ID = "516247416878530560";
+    let ws: WebSocket | null = null;
+    let heartbeatTimer: NodeJS.Timeout | null = null;
+    let fallbackInterval: NodeJS.Timeout | null = null;
+    let isSubscribed = true;
+
+    async function pollFallback() {
       try {
         const res = await fetch("/api/presence");
         if (res.ok) {
           const json = await res.json();
-          setPresenceData(json);
+          if (isSubscribed) setPresenceData(json);
         }
       } catch (err) {
         console.error("failed to load presence telemetry:", err);
       } finally {
-        setPresenceLoading(false);
+        if (isSubscribed) setPresenceLoading(false);
       }
     }
 
-    fetchPresence();
-    const interval = setInterval(fetchPresence, 10000);
-    return () => clearInterval(interval);
+    // Connect directly to Lanyard WebSocket for sub-second real-time Discord Rich Presence
+    try {
+      ws = new WebSocket("wss://api.lanyard.rest/socket");
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.op === 1) {
+            // Hello opcode -> schedule heartbeat ping
+            const interval = data.d?.heartbeat_interval || 30000;
+            heartbeatTimer = setInterval(() => {
+              if (ws?.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ op: 3 }));
+              }
+            }, interval);
+
+            // Subscribe to user Discord ID
+            ws?.send(
+              JSON.stringify({
+                op: 2,
+                d: { subscribe_to_id: DISCORD_USER_ID },
+              })
+            );
+          } else if (data.op === 0 && (data.t === "INIT_STATE" || data.t === "PRESENCE_UPDATE")) {
+            const parsed = parseLanyardData(data.d);
+            if (parsed && isSubscribed) {
+              setPresenceData(parsed);
+              setPresenceLoading(false);
+            } else if (!parsed) {
+              pollFallback();
+            }
+          }
+        } catch {}
+      };
+
+      ws.onerror = () => {
+        pollFallback();
+      };
+
+      ws.onclose = () => {
+        if (heartbeatTimer) clearInterval(heartbeatTimer);
+        if (!fallbackInterval) {
+          fallbackInterval = setInterval(pollFallback, 10000);
+        }
+      };
+    } catch {
+      pollFallback();
+    }
+
+    // Initial fallback query
+    pollFallback();
+    fallbackInterval = setInterval(pollFallback, 10000);
+
+    return () => {
+      isSubscribed = false;
+      if (heartbeatTimer) clearInterval(heartbeatTimer);
+      if (fallbackInterval) clearInterval(fallbackInterval);
+      if (ws) {
+        ws.onclose = null;
+        ws.close();
+      }
+    };
   }, []);
 
   useEffect(() => {
